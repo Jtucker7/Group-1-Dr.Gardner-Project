@@ -33,11 +33,46 @@ sub csvFile {
 		@parse = split(',', $line);
 	}
 	#close FILE;
-	print "@parse\n";
-
+	return @parse;
 }
 
-#The following Prompts the User to see if they want 
+
+#This subroutine exports parsed data to a html table
+sub htmlExport {
+	system $^O eq 'MSWin32' ? 'cls' : 'clear';
+	print "\n**************************************\n";
+	print "********** Export File Menu **********\n";
+	print "**************************************\n\n";
+
+	print "Create File Name(for example use gene.html): ";
+	chomp(my $htmlFile = <>);
+	#Pseudo Code touch $htmlFile in existence
+	open FILE, '>', $htmlFile || die "File does not exist\n"; 
+	print FILE "<html>\n";
+	print FILE "<body>\n";
+	print FILE "<table>\n";
+		print FILE "<tr>\n";
+			print FILE "<td>CSV ARRAY HERE</td>\n";
+			print FILE "<td>CSV ARRAY HERE</td>\n";		
+			print FILE "<td>CSV ARRAY HERE</td>\n";
+		print FILE "</tr>\n";
+		print FILE "<tr>\n";
+			print FILE "<td>CSV ARRAY HERE</td>\n";
+			print FILE "<td>CSV ARRAY HERE</td>\n";		
+			print FILE "<td>CSV ARRAY HERE</td>\n";
+		print FILE "</tr>\n";
+		print FILE "<tr>\n";
+			print FILE "<td>CSV ARRAY HERE</td>\n";
+			print FILE "<td>CSV ARRAY HERE</td>\n";		
+			print FILE "<td>CSV ARRAY HERE</td>\n";
+		print FILE "</tr>\n";
+	print FILE "</table>\n";
+	print FILE "</body>\n";
+	print FILE "</html>\n";
+	close FILE;
+}
+
+#The following prompts the user to see if they want 
 #to import from a CSV or Database and calls the 
 #corresponding subroutine
 system $^O eq 'MSWin32' ? 'cls' : 'clear';
@@ -45,9 +80,9 @@ print "\n*************************************\n";
 print "*********  Gene Sequencer  **********\n";
 print "*************************************\n\n";
 do {
-	print "How would you like to import the file.\n";
+	print "From where do you wish to import your data\n\n";
 	print "1) CSV\n";
-	print "2) Database\n";
+	print "2) Database\n\n";
 	print "Enter: ";
 	$_ = <>;
 	
@@ -61,6 +96,40 @@ do {
 	}
 	else {
 		system $^O eq 'MSWin32' ? 'cls' : 'clear';
-		print "\n\nInvalid Input\n\n";
+		print "\n\nInvalid Input\n";
 	}
    } while (($_!=1) && ($_!=2));
+
+#The following prompts the user to give the option
+#to export the data to an html table
+
+do {
+	print "\nFile Read\n\n";
+	print "Would you like to export file to a HTML table?\n";
+	print "1) Yes\n";
+	print "2) No\n";
+	print "Enter: ";
+	$_ = <>;
+	if ($_ == 1) {
+		&htmlExport;	
+	}
+	elsif ($_ == 2) {
+		print "Press any key to quit.\n";
+		$_ = <>;
+		exit;
+	}
+	else {
+		print "Invalid Input\n\n";
+	}
+} while (($_!=1) && ($_!=2));
+
+
+
+
+
+
+
+
+
+
+
